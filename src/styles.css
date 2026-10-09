@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-50: #f2f6fb;
+  --color-brand-100: #e1ebf5;
+  --color-brand-200: #c4d6ea;
+  --color-brand-300: #97b7d9;
+  --color-brand-400: #6a98c7;
+  --color-brand-500: #4c7fb4;
+  --color-brand-600: #3c6a9d;
+  --color-brand-700: #2f5583;
+  --color-brand-800: #27466b;
+  --color-brand-900: #1b304b;
+  --color-ink: #16202a;
+  --color-ink-soft: #384451;
+  --color-paper: #ffffff;
+  --color-pumice: #f1f3f0;
+  --color-pumice-deep: #e4e8e3;
+  --color-line: #d9ded8;
+  --color-warn: #8d5a1a;
+  --color-warn-soft: #faeed3;
+  --color-danger: #99282d;
+  --color-danger-soft: #f5e0e1;
+  --color-safe: #2c6449;
+  --color-safe-soft: #e3f2eb;
+  --radius-soft: 0.75rem;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+.hero-shade {
+  background: linear-gradient(180deg, rgb(16 22 28 / 0.5), rgb(16 22 28 / 0.72));
+}
+
+.card-shade {
+  background: linear-gradient(180deg, transparent 20%, rgb(16 22 28 / 0.2) 48%, rgb(16 22 28 / 0.88) 100%);
+}
+
+.hero-tall {
+  min-height: 70vh;
+  padding-bottom: 6.5rem;
+}
+
+.hero-mid {
+  min-height: 24rem;
+  padding-bottom: 5.5rem;
+}
+
+.ridge-cut {
+  height: 4.25rem;
+}
+
+.leaflet-div-icon.modern-leaflet-marker-wrap {
+  background: transparent;
+  border: none;
+}
+
+.geo-pin-marker {
+  position: relative;
+  display: flex;
+  width: 32px;
+  height: 42px;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.geo-pin-body {
+  z-index: 5;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pin-grad-start), var(--pin-grad-end));
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.35), 0 0 10px var(--pin-glow);
+}
+
+.geo-pin-img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.geo-pin-icon {
+  display: flex;
+  color: #fff;
+  line-height: 1;
+}
+
+.geo-pin-tip {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  translate: -50%;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 6px solid var(--pin-grad-end);
+}
+
+.geo-pin-ground-pulse {
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  z-index: 1;
+  width: 8px;
+  height: 3px;
+  translate: -50%;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.35);
+}
+
+@media (min-width: 768px) {
+  .hero-shade {
+    background: linear-gradient(90deg, rgb(16 22 28 / 0.82) 0%, rgb(16 22 28 / 0.46) 46%, rgb(16 22 28 / 0.08) 78%);
+  }
+
+  .hero-tall {
+    min-height: 78vh;
+  }
+
+  .hero-mid {
+    min-height: 28rem;
+  }
+
+  .ridge-cut {
+    height: 6.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
