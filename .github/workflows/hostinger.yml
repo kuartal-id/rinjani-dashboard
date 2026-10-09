@@ -1,0 +1,54 @@
+name: Publish hostinger branch
+
+# hPanel Git copies this branch into the website's document root.
+# main is the app source and has no index.html, which is why a new
+# Hostinger site returns 403 until it deploys this branch.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-hostinger
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          PAGES: "1"
+          VITE_SITE: ${{ github.event.repository.name }}
+
+      - name: Assemble document root
+        run: |
+          test -s .vercel/output/static/index.html
+          mkdir -p "$HOME/site"
+          cp -a .vercel/output/static/. "$HOME/site/"
+          cp .vercel/output/static/index.html "$HOME/site/404.html"
+          cp deploy/hostinger.htaccess "$HOME/site/.htaccess"
+
+      - name: Force-push the hostinger branch
+        run: |
+          cd "$HOME/site"
+          git init -q
+          git symbolic-ref HEAD refs/heads/hostinger
+          git config user.name "kuartal-id"
+          git config user.email "335043063+kuartal-id@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy: ${{ github.sha }}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" hostinger
